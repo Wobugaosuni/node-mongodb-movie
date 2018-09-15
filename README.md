@@ -1,6 +1,6 @@
 # node-mongodb-movie
 
-Node.js + MongoDB网站后台增删改查的简单轮子
+Node.js + MongoDB 网站后台增删改查的简单轮子
 
 ## 运行项目(以管理员执行)
 
