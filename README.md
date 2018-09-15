@@ -2,7 +2,6 @@
 
 Node.js + MongoDB网站后台增删改查的简单轮子
 
-
 ## 运行项目(以管理员执行)
 
 ```bash
@@ -12,11 +11,8 @@ Node.js + MongoDB网站后台增删改查的简单轮子
   ## 2. 启动 MongoDB
 
   ## 3. 启动项目
-  node app.js
+  npm start
 ```
-
-[http://localhost:8083/](http://localhost:8083/)
-
 
 ## 技术栈
 
