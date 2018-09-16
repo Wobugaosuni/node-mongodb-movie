@@ -176,7 +176,7 @@ app.get('/admin/list', function (req, res) {
 			console.log(err)
 		}
 		res.render('list', {
-			title: 'mooc列表',
+			title: '电影列表',
 			movies: movies
 		})
 	});
