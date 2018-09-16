@@ -3,21 +3,23 @@ var path = require('path');
 var port = process.env.PORT || 3000;
 var app = express();
 var mongoose = require('mongoose');
-var _ = require('underscore');
+// var _ = require('underscore');
 
 var serveStatic = require('serve-static');
 var bodyParser = require('body-parser');
 
-var utils = require('./common/util')
+var utils = require('./public/js/util')
 
 
 app.use(bodyParser.urlencoded({
 	extended: true
 })); // 设置express中间件，对数据格式文本化
+
 app.use(bodyParser.json({
 	limit: '1mb'
 }));
-app.use('/static', serveStatic('public'));
+app.use('/static', serveStatic('public'));  // 静态文件目录
+
 app.locals.moment = require('moment');
 
 
@@ -59,7 +61,7 @@ mongoose.connection.on('disconnected', function () {
 var Movie = require('./models/movies');
 
 //以下是路由
-//index page
+// 首页
 app.get('/', function (req, res) {
 	Movie.fetch(function (err, movies) {
 		if (err) {
@@ -73,7 +75,7 @@ app.get('/', function (req, res) {
 	});
 });
 
-//admin page
+// 录入页
 app.get('/admin/movie', function (req, res) {
 	// 渲染 ./views/pages/admin.jade 页面
 	res.render('admin', {
@@ -91,7 +93,7 @@ app.get('/admin/movie', function (req, res) {
 	})
 });
 
-//admin post movie
+// 接口，保存录入
 app.post('/admin/movie/new', function (req, res) {
 	var movieObj = JSON.parse(JSON.stringify(req.body.movie));
 	var id = movieObj._id
@@ -105,7 +107,9 @@ app.post('/admin/movie/new', function (req, res) {
 			if (err) {
 				console.log(err)
 			}
-			_movie = _.extend(movie, movieObj);
+
+			_movie = Object.assign(movie, movieObj)
+
 			_movie.save(function (err, movie) {
 				if (err) {
 					console.log(err)
@@ -130,7 +134,7 @@ app.post('/admin/movie/new', function (req, res) {
 	}
 });
 
-// detail page
+// 详情页
 app.get('/movie/:id', function (req, res) {
 	var id = req.params.id;
 	Movie.findById(id, function (err, movie) {
@@ -143,7 +147,7 @@ app.get('/movie/:id', function (req, res) {
 });
 
 
-//admin update movie
+// 更新页
 app.get('/admin/update/:id', function (req, res) {
 	var id = req.params.id;
 	console.log('--------id--------:', id);
@@ -165,7 +169,7 @@ app.get('/admin/update/:id', function (req, res) {
 });
 
 
-//list page
+// 列表页
 app.get('/admin/list', function (req, res) {
 	Movie.fetch(function (err, movies) {
 		if (err) {
@@ -179,10 +183,10 @@ app.get('/admin/list', function (req, res) {
 });
 
 
-
-//list delete
+//删除
 app.delete('/admin/list', function (req, res) {
 	var id = req.query.id;
+
 	if (id) {
 		Movie.remove({
 			_id: id

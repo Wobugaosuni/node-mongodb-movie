@@ -1,12 +1,13 @@
 {
-  "name": "MOOC Movie",
+  "name": "node-mongodb-movie",
   "authors": [
-    "vivalaci <vivalaci@qq.com>"
+    "annhuang <397401374@qq.com>"
   ],
-  "description": "just a learning code",
+  "description": "node-mongodb-movie",
   "main": "",
   "keywords": [
-    "mooc"
+    "node",
+    "mongodb"
   ],
   "license": "MIT",
   "homepage": "",
