@@ -3,7 +3,7 @@ block content
     .container
         .row
             .col-md-7
-                embed(src="#{movie.flash}", allowFullScreen="true", quality="high", width="720px", height="480px", align="middle", type="application/x-shockwave-flash")
+                iframe(src="#{movie.flash}", width="720px", height="480px", align="middle", frameborder="0" allowfullscreen="true")
             .col-md-5
                 dl.dl-horizontal
                     dt 电影名称
@@ -13,7 +13,7 @@ block content
                     dt 国家
                     dd=movie.country
                     dt 语言
-                    dd=movie.lan
+                    dd=movie.language
                     dt 上映年份
                     dd=movie.year
                     dt 简介

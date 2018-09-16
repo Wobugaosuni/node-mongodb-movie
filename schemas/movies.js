@@ -4,7 +4,7 @@ var mongoose = require('mongoose');
 var MoiveSchema = new mongoose.Schema({
 	doctor: String,
 	title: String,
-	lan: String,
+	language: String,
 	country: String,
 	summary: String,
 	flash: String,

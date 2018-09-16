@@ -100,6 +100,7 @@ app.post('/admin/movie/new', function (req, res) {
 	// console.log(req.body.movie);
 
 	if (id !== 'undefined') {
+		// 编辑
 		Movie.findById(id, function (err, movie) {
 			if (err) {
 				console.log(err)
@@ -113,6 +114,7 @@ app.post('/admin/movie/new', function (req, res) {
 			})
 		})
 	} else {
+		// 新建
 		const newMovie = utils.removeObjKey('_id', movieObj)
 		// console.log('newMovie:', newMovie)
 
@@ -144,6 +146,8 @@ app.get('/movie/:id', function (req, res) {
 //admin update movie
 app.get('/admin/update/:id', function (req, res) {
 	var id = req.params.id;
+	console.log('--------id--------:', id);
+
 	if (id) {
 		Movie.findById(id, function (err, movie) {
 			if (err) {
