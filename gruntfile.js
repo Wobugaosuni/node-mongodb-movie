@@ -2,7 +2,7 @@ module.exports = function (grunt) {
 
   grunt.initConfig({
     watch: {
-      pug: {
+      jade: {
         files: ['app/views/**'],
         tasks: ['livereload'],
         options: {

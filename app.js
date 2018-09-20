@@ -200,4 +200,4 @@ app.delete('/admin/list', function (req, res) {
 			}
 		})
 	}
-})
+});
