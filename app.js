@@ -35,6 +35,7 @@ console.log(`localhost:${port}`);
 
 
 // 连接本地数据库
+mongoose.Promise = global.Promise
 mongoose.connect('mongodb://localhost:27017/movies');
 /**
  * 连接成功
