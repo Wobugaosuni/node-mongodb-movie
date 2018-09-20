@@ -1,6 +1,6 @@
 var express = require('express');
 var path = require('path');
-var port = process.env.PORT || 3000;
+var port = process.env.PORT || 4001;
 var app = express();
 var mongoose = require('mongoose');
 // var _ = require('underscore');
@@ -18,7 +18,7 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json({
 	limit: '1mb'
 }));
-app.use('/static', serveStatic('public'));  // 静态文件目录
+app.use(serveStatic(path.join(__dirname, 'public')))  // 静态文件目录
 
 app.locals.moment = require('moment');
 
@@ -26,7 +26,7 @@ app.locals.moment = require('moment');
 // 设置视图根目录
 app.set('views', './views/pages');
 // 设置默认的模板引擎
-app.set('view engine', 'pug');
+app.set('view engine', 'jade');
 // 监听的端口
 app.listen(port);
 
