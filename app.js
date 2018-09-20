@@ -26,7 +26,7 @@ app.locals.moment = require('moment');
 // 设置视图根目录
 app.set('views', './views/pages');
 // 设置默认的模板引擎
-app.set('view engine', 'jade');
+app.set('view engine', 'pug');
 // 监听的端口
 app.listen(port);
 
