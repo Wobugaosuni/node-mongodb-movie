@@ -3,7 +3,6 @@ $(function () {
         var target = $(e.target);
         var id = target.data('id');
         var tr = $('.item-id-' + id);
-        console.log(e);
 
         $.ajax({
             type:'DELETE',
