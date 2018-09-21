@@ -26,7 +26,7 @@ app.locals.moment = require('moment');
 // 设置视图根目录
 app.set('views', './views/pages');
 // 设置默认的模板引擎
-app.set('view engine', 'jade');
+app.set('view engine', 'pug');
 // 监听的端口
 app.listen(port);
 
@@ -100,12 +100,15 @@ app.get('/admin/movie', function (req, res) {
 // 接口，保存录入
 app.post('/admin/movie/new', function (req, res) {
 	var movieObj = JSON.parse(JSON.stringify(req.body.movie));
+
+	console.log('movieObj:', movieObj)
+
 	var id = movieObj._id
 	var _movie;
 
 	// console.log(req.body.movie);
 
-	if (id !== 'undefined') {
+	if (id.length) {
 		// 编辑
 		Movie.findById(id, function (err, movie) {
 			if (err) {
@@ -124,13 +127,13 @@ app.post('/admin/movie/new', function (req, res) {
 	} else {
 		// 新建
 		const newMovie = utils.removeObjKey('_id', movieObj)
-		// console.log('newMovie:', newMovie)
+		console.log('newMovie:', newMovie)
 
 		_movie = new Movie(newMovie);
 
 		_movie.save(function (err, movie) {
 			if (err) {
-				console.log(err)
+				console.log('create movie record fail', err)
 			}
 			console.log('create movie record success', movie);
 			res.redirect('/movie/' + movie._id);
