@@ -59,7 +59,10 @@ mongoose.connection.on('disconnected', function () {
 });
 
 // 把模型加载进来
-var Movie = require('./models/movies');
+var db = require('./models/db');
+var Movie = db.Movie;
+var User = db.User
+
 
 //以下是路由
 // 首页
@@ -93,6 +96,21 @@ app.get('/admin/movie', function (req, res) {
 		}
 	})
 });
+
+// 注册
+app.post('/user/signup', function (req, res) {
+	var userInfo = req.body.user
+	console.log('userInfo:', userInfo)
+	var _userInfo = new User(userInfo)
+
+	_userInfo.save(function (err, data) {
+		if (err) {
+			console.log('sigup error:', err);
+		}
+
+		console.log('sigup success:', data);
+	})
+})
 
 // 接口，保存录入
 app.post('/admin/movie/new', function (req, res) {
