@@ -55,5 +55,12 @@ UserSchema.pre('save', function (next) {
   next()
 })
 
+UserSchema.static('fetch', function (cb) {
+  return this
+    .find()
+    .sort('meta.updateAt')
+    .exec(cb)
+})
+
 
 module.exports = UserSchema;

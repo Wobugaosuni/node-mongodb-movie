@@ -13,7 +13,7 @@ var utils = require('./public/js/util')
 
 app.use(bodyParser.urlencoded({
 	extended: true
-})); // 设置express中间件，对数据格式文本化
+})); // 设置express中间件，对数据格式对象化
 
 app.use(bodyParser.json({
 	limit: '1mb'
@@ -96,21 +96,6 @@ app.get('/admin/movie', function (req, res) {
 		}
 	})
 });
-
-// 注册
-app.post('/user/signup', function (req, res) {
-	var userInfo = req.body.user
-	console.log('userInfo:', userInfo)
-	var _userInfo = new User(userInfo)
-
-	_userInfo.save(function (err, data) {
-		if (err) {
-			console.log('sigup error:', err);
-		}
-
-		console.log('sigup success:', data);
-	})
-})
 
 // 接口，保存录入
 app.post('/admin/movie/new', function (req, res) {
@@ -220,3 +205,47 @@ app.delete('/admin/list', function (req, res) {
 		})
 	}
 });
+
+
+
+// 注册
+app.post('/user/signup', function (req, res) {
+	// 拿到参数
+	var userInfo = req.body.user
+	// 或者通过 req.param('user')
+	// console.log('userInfo:', userInfo)
+
+	User.find({name: userInfo.name}, function (error, docs) {
+		console.log('find docs:', docs);
+		if (docs.length) {
+			// 已经注册过了
+			res.redirect('/')
+		} else {
+			// 增加注册
+			var _userInfo = new User(userInfo)
+
+			_userInfo.save(function (err, data) {
+				if (err) {
+					console.log('sigup error:', err);
+				}
+
+				console.log('sigup success:', data);
+			})
+
+			res.redirect('/admin/userList')
+		}
+	})
+
+})
+
+app.get('/admin/userList', function (req, res) {
+	User.fetch(function (err, docs) {
+		if (err) {
+			console.log('get userList error:', err);
+		}
+
+		res.render('userList', {
+			users: docs
+		})
+	})
+})
