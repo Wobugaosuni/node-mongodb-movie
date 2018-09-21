@@ -82,7 +82,7 @@ app.get('/', function (req, res) {
 // 录入页
 app.get('/admin/movie', function (req, res) {
 	// 渲染 ./views/pages/admin.jade 页面
-	res.render('admin', {
+	res.render('admin/admin', {
 		title: '后台录入',
 		movie: {
 			title: '',
@@ -164,7 +164,7 @@ app.get('/admin/update/:id', function (req, res) {
 
 			console.log('---movie---:', movie);
 
-			res.render('admin', {
+			res.render('admin/admin', {
 				title: '更新电影',
 				movie: movie
 			})
@@ -244,7 +244,7 @@ app.get('/admin/userList', function (req, res) {
 			console.log('get userList error:', err);
 		}
 
-		res.render('userList', {
+		res.render('admin/userList', {
 			users: docs
 		})
 	})
