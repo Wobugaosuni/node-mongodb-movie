@@ -1,15 +1,16 @@
 var express = require('express');
 var path = require('path');
-var port = process.env.PORT || 4001;
-var app = express();
 var mongoose = require('mongoose');
 // var _ = require('underscore');
 var serveStatic = require('serve-static');
 var bodyParser = require('body-parser');
-var utils = require('./public/js/util')
 var session = require('express-session')  // 提供会话支持
 var MongoStore = require('connect-mongo')(session);  // 会话持久化
 
+var utils = require('./public/js/util')
+
+var app = express();
+var port = process.env.PORT || 4001;
 var dbUrl = 'mongodb://localhost:27017/movies'
 
 

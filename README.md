@@ -59,6 +59,20 @@ Node.js + MongoDB 网站后台增删改查的简单轮子
     4.mongoDB  √ (本项目使用 mongoDB)
 
     - [connect-mongo](https://github.com/jdesboeufs/connect-mongo)
+      ```js
+        var session = require('express-session')  // 提供会话支持
+        var MongoStore = require('connect-mongo')(session);  // 会话持久化
+        var dbUrl = 'mongodb://localhost:27017/movies'
 
+        app.use(session({
+          secret: 'imooc',
+          name: 'connectSessionId',
+          store: new MongoStore({   // 持久化
+            url: dbUrl,
+            collection: sessions,   // 非必填，默认会在数据库中增加一张 sessions 的表
+          })
+        }))
+
+      ```
 
 
