@@ -38,21 +38,22 @@ UserSchema.pre('save', function (next) {
   // salt：随机生成的盐
   bcrypt.genSalt(saltRounds, function(err, salt) {
     if (err) next(err)
-    console.log('genSalt:', salt);
+    console.log('genSalt:', salt);  // $2b$10$/lDvxVDCYJ3PLeWeiIMg2u
 
     // user.password: 用户明文的密码
     // salt: 生成的盐
     // hash: 加盐后，进行hash方法后的 新的hash值
     bcrypt.hash(user.password, salt, function(err, hash) {
       if (err) next(err)
-      console.log('bcrypt.hash:', hash);
+      console.log('bcrypt.hash:', hash);  // $2b$10$/lDvxVDCYJ3PLeWeiIMg2u/E11z09CP5SYwMPXVHhqGaCNwypvZl6
 
       // Store hash in your password DB.
-      user.password = salt
+      user.password = hash
+
+      next()
     });
   });
 
-  next()
 })
 
 UserSchema.static('fetch', function (cb) {
@@ -60,6 +61,20 @@ UserSchema.static('fetch', function (cb) {
     .find()
     .sort('meta.updateAt')
     .exec(cb)
+})
+
+// 实例的方法
+UserSchema.method('comparePassword', function (password, cb) {
+  const user = this
+  bcrypt.compare(password, user.password, function(error, isMatch) {
+    // isMatch == true
+
+    if (error) {
+      cb(error)
+    }
+
+    cb(null, isMatch)
+  });
 })
 
 

@@ -233,14 +233,45 @@ app.post('/user/signup', function (req, res) {
 				}
 
 				console.log('sigup success:', data);
+				res.redirect('/admin/userList')
 			})
-
-			res.redirect('/admin/userList')
 		}
 	})
 
 })
 
+
+// 登录
+app.post('/user/signin', function (req, res) {
+	var userInfo = req.body.user
+
+	User.findOne({name: userInfo.name}, function (error, docs) {
+		if (error) {
+			console.log('findOne user error:', error);
+		}
+		if (!docs) {
+			// null
+			res.redirect('/')
+		}
+
+		console.log('docs:', docs);
+
+		// 实例的方法，校验密码
+		docs.comparePassword(userInfo.password, (error, isMatch) => {
+			if (error) {
+				console.log('comparePassword error:', error);
+			}
+
+			if (isMatch) {
+				console.log('comparePassword success');
+			} else {
+				console.log('comparePassword fail');
+			}
+		})
+	})
+})
+
+// 获取用户列表
 app.get('/admin/userList', function (req, res) {
 	User.fetch(function (err, docs) {
 		if (err) {
