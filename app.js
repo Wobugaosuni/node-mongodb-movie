@@ -8,6 +8,13 @@ var mongoose = require('mongoose');
 var serveStatic = require('serve-static');
 var bodyParser = require('body-parser');
 
+var session = require('express-session')  // 提供会话支持
+
+app.use(session({
+	secret: 'imooc',   // Required option, used to sign the session ID cookie，防止篡改cookie
+	name: 'connectSessionId'   // 设置 cookie 中保存 session id 的字段名称，默认为connect.sid
+}))
+
 var utils = require('./public/js/util')
 
 
@@ -67,10 +74,13 @@ var User = db.User
 //以下是路由
 // 首页
 app.get('/', function (req, res) {
+	console.log('req.session:', req.session);
+
 	Movie.fetch(function (err, movies) {
 		if (err) {
 			console.log(err)
 		}
+
 		// 渲染 ./views/pages/index.jade 页面
 		res.render('index', {
 			title: '🎬 电影',
@@ -264,12 +274,18 @@ app.post('/user/signin', function (req, res) {
 
 			if (isMatch) {
 				console.log('comparePassword success');
+
+				// 保存session
+				req.session.user = docs
+
+				return res.redirect('/')
 			} else {
 				console.log('comparePassword fail');
 			}
 		})
 	})
 })
+
 
 // 获取用户列表
 app.get('/admin/userList', function (req, res) {
