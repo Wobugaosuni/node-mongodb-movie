@@ -34,18 +34,12 @@ Node.js + MongoDB 网站后台增删改查的简单轮子
   cookie：通过在客户端记录信息确定用户身份
   session：通过在服务端记录信息确定用户身份
 
-  session持久化的作用及保存地方：
-    可用户操作页面时服务器当掉了，session可以把用户进程保存在4个地方
-    1.cookie
-    2.内存
-    3.redis
-    4.mongoDB  √ (本项目使用 mongoDB)
-
   - express中有个中间件提供会话支持：[express-session](https://github.com/expressjs/session)
 
   ```js
     var session = require('express-session')
 
+    // 挂载中间件（中间件实例化）
     app.use(session({
       secret: 'imooc'   // 通过设置 secret 来计算 hash 值并放在 cookie 中，防止cookie被篡改
       name: '',   // 设置 cookie 中保存 session id 的字段名称，默认为connect.sid
@@ -53,5 +47,18 @@ Node.js + MongoDB 网站后台增删改查的简单轮子
   ```
 
   通过 `req.session`获取当前用户的会话对象
+
+  但上述的方法当服务器重启时，用户状态就没了
+
+
+  - session持久化的作用及保存地方
+    可用户操作页面时服务器当掉了，session可以把用户进程保存在4个地方
+    1.cookie
+    2.内存
+    3.redis
+    4.mongoDB  √ (本项目使用 mongoDB)
+
+    - [connect-mongo](https://github.com/jdesboeufs/connect-mongo)
+
 
 
