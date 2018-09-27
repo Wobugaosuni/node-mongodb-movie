@@ -210,7 +210,7 @@ app.get('/admin/list', function (req, res) {
 
 
 //删除
-app.delete('/admin/list', function (req, res) {
+app.delete('/admin/movieList', function (req, res) {
 	var id = req.query.id;
 
 	if (id) {
@@ -228,7 +228,24 @@ app.delete('/admin/list', function (req, res) {
 	}
 });
 
+// 用户删除
+app.delete('/admin/userList', function (req, res) {
+	var id = req.query.id;
 
+	if (id) {
+		User.remove({
+			_id: id
+		}, function (err, movie) {
+			if (err) {
+				console.log(err)
+			} else {
+				res.json({
+					success: 1
+				})
+			}
+		})
+	}
+})
 
 // 注册
 app.post('/user/signup', function (req, res) {

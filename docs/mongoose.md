@@ -1,5 +1,12 @@
 **数据库建模工具** [mongoose](https://mongoosejs.com/docs/api.htm)
-  使用到的接口如下：
+  - 能够对 MongoDB 进行建模
+
+
+## 三个概念
+
+- Schema：模式
+- Model：模型
+- Document：文档
 
 
 ## Schema类
