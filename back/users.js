@@ -83,6 +83,20 @@ const users = function (app, User) {
     })
   })
 
+  /**
+   * 登出
+   * 就是把库里的session.user删除
+   */
+  app.get('/logout', function (req, res) {
+    // 1. 删除 req.session.user 属性 和 库里的 session.user
+    delete req.session.user
+    // 2. 删除 本地的全局变量 属性
+    delete app.locals.user
+
+    // 3. 跳转到首页
+    res.redirect('/')
+  })
+
 
   // 获取用户列表
   app.get('/admin/userList', function (req, res) {
