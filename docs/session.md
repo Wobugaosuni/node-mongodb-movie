@@ -44,3 +44,64 @@
       }))
 
     ```
+
+## 会话预处理逻辑
+  在用户成功登录后，需要把用户的信息保存到session里，再注入到本地的变量
+
+  1. 登录成功后，把用户信息保存到session里
+  ```js
+    // 登录
+    app.post('/user/signin', function (req, res) {
+      var userInfo = req.body.user
+
+      User.findOne({name: userInfo.name}, function (error, docs) {
+        if (error) {
+          console.log('findOne user error:', error);
+        }
+        if (!docs) {
+          // null
+          res.redirect('/')
+        }
+
+        console.log('docs:', docs);
+
+        // 实例的方法，校验密码
+        docs.comparePassword(userInfo.password, (error, isMatch) => {
+          if (error) {
+            console.log('comparePassword error:', error);
+          }
+
+          if (isMatch) {
+            console.log('comparePassword success');
+
+            // 保存session
+            req.session.user = docs
+
+            return res.redirect('/')
+          } else {
+            console.log('comparePassword fail');
+          }
+        })
+      })
+    })
+  ```
+
+  2. 适配各个页面，把登录的用户信息保存到本地变量中
+  ```js
+    /**
+     * 会话持久化预处理
+     * 适配各个路由、各个页面
+     * 文档参考：https://expressjs.com/zh-cn/4x/api.html#app.use
+     */
+    app.use(function (req, res, next) {
+      var user = req.session.user
+
+      if (user) {
+        // 设置本地全局变量
+        app.locals.user = user
+      }
+
+      // 下一步
+      next();
+    });
+  ```

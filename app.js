@@ -16,7 +16,7 @@ var app = express();
 // 端口
 var port = process.env.PORT || 4001;
 // 本地数据库地址
-var dbUrl = 'mongodb://localhost:27017/movies'
+var dbUrl = 'mongodb://127.0.0.1:27017/movies'
 
 
 // 连接本地数据库
@@ -79,11 +79,30 @@ app.locals.moment = require('moment');
 app.set('views', './views/pages');
 // 设置默认的模板引擎
 app.set('view engine', 'pug');
+
 // 监听的端口
 app.listen(port);
-
 console.log('server start at port: ' + port);
 console.log(`localhost:${port}`);
+
+
+/**
+ * 会话持久化预处理
+ * 适配各个路由、各个页面
+ * 文档参考：https://expressjs.com/zh-cn/4x/api.html#app.use
+ */
+app.use(function (req, res, next) {
+	console.log('req.session:', req.session);
+	var user = req.session.user
+
+	if (user) {
+		// 设置本地全局变量
+		app.locals.user = user
+	}
+
+	// 下一步
+	next();
+});
 
 
 // 把模型加载进来

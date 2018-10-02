@@ -2,14 +2,6 @@ var movies = function (app, Movie) {
   //以下是路由
   // 首页
   app.get('/', function (req, res) {
-    console.log('req.session:', req.session);
-    var user = req.session.user
-
-    if (user) {
-      // 设置本地全局变量
-      app.locals.user = user
-    }
-
     Movie.fetch(function (err, movies) {
       if (err) {
         console.log(err)
