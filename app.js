@@ -8,8 +8,8 @@ var session = require('express-session')  // 提供会话支持
 var MongoStore = require('connect-mongo')(session);  // 会话持久化
 
 var utils = require('./public/js/util')
-var movies = require('./back/movies')
-var users = require('./back/users')
+var movies = require('./routes/movies')
+var users = require('./routes/users')
 
 // 实例化
 var app = express();
@@ -105,11 +105,6 @@ app.use(function (req, res, next) {
 });
 
 
-// 把模型加载进来
-var db = require('./models/db');
-var Movie = db.Movie;
-var User = db.User
-
-movies(app, Movie)
-users(app, User)
+movies(app)
+users(app)
 

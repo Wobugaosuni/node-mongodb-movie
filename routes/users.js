@@ -1,4 +1,8 @@
-const users = function (app, User) {
+// 把模型加载进来
+var db = require('./models/db');
+var User = db.User
+
+const users = function (app) {
   // 用户删除
   app.delete('/admin/userList', function (req, res) {
     var id = req.query.id;

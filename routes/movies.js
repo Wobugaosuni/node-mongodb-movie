@@ -1,4 +1,8 @@
-var movies = function (app, Movie) {
+// 把模型加载进来
+var db = require('./models/db');
+var Movie = db.Movie;
+
+var movies = function (app) {
   //以下是路由
   // 首页
   app.get('/', function (req, res) {
