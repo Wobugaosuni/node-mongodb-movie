@@ -3,11 +3,11 @@ var path = require('path');
 var mongoose = require('mongoose');
 var serveStatic = require('serve-static');
 var bodyParser = require('body-parser');
+var morgan = require('morgan')
 
 var session = require('express-session')  // 提供会话支持
 var MongoStore = require('connect-mongo')(session);  // 会话持久化
 
-var utils = require('./public/js/util')
 var movies = require('./routes/movies')
 var users = require('./routes/users')
 
@@ -56,7 +56,8 @@ app.use(session({
 }))
 
 /**
- * 设置express中间件，对数据格式对象化
+ * 设置express中间件
+ * 对POST请求的请求体进行解析，对数据格式对象化
  */
 app.use(bodyParser.urlencoded({
 	extended: true
@@ -70,6 +71,43 @@ app.use(bodyParser.json({
 // 静态文件目录
 app.use(serveStatic(path.join(__dirname, 'public')))
 
+
+/**
+ * 会话持久化预处理
+ * 适配各个路由、各个页面
+ * 文档参考：https://expressjs.com/zh-cn/4x/api.html#app.use
+ */
+app.use(function (req, res, next) {
+	// console.log('req.session:', req.session);
+	var user = req.session.user
+
+	if (user) {
+		// 设置本地全局变量
+		app.locals.user = user
+	}
+
+	// 下一步
+	next();
+});
+
+
+// 开发环境配置
+// console.log('env:', app.get('env'));
+if (app.get('env') === 'development') {
+	// 格式化的html配置
+	// https://github.com/expressjs/express/wiki/Migrating-from-2.x-to-3.x
+	app.locals.pretty = true  // same: res.render(view, { pretty: true }).
+
+	// 打印错误日志
+	app.set('showStackError', true)
+
+	// 打印请求信息
+	// 另外安装中间件：https://github.com/expressjs/morgan
+	app.use(morgan(':method :url :status'))
+
+	// 将 debug 模式打开
+	mongoose.set('debug', true)
+}
 
 // 定义本地的变量
 app.locals.moment = require('moment');
@@ -86,25 +124,7 @@ console.log('server start at port: ' + port);
 console.log(`localhost:${port}`);
 
 
-/**
- * 会话持久化预处理
- * 适配各个路由、各个页面
- * 文档参考：https://expressjs.com/zh-cn/4x/api.html#app.use
- */
-app.use(function (req, res, next) {
-	console.log('req.session:', req.session);
-	var user = req.session.user
-
-	if (user) {
-		// 设置本地全局变量
-		app.locals.user = user
-	}
-
-	// 下一步
-	next();
-});
-
-
+// 路由配置
 movies(app)
 users(app)
 

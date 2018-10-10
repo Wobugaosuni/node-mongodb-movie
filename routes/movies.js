@@ -1,5 +1,7 @@
 // 把模型加载进来
-var db = require('./models/db');
+var db = require('../models/db');
+var utils = require('../public/js/util')
+
 var Movie = db.Movie;
 
 var movies = function (app) {
@@ -76,7 +78,7 @@ var movies = function (app) {
           console.log('create movie record fail', err)
         }
         console.log('create movie record success', movie);
-        res.redirect('/movie/' + movie._id);
+        // res.redirect('/movie/' + movie._id);
       })
     }
   });

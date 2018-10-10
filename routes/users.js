@@ -1,5 +1,5 @@
 // 把模型加载进来
-var db = require('./models/db');
+var db = require('../models/db');
 var User = db.User
 
 const users = function (app) {
