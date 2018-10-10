@@ -8,8 +8,7 @@ var morgan = require('morgan')
 var session = require('express-session')  // 提供会话支持
 var MongoStore = require('connect-mongo')(session);  // 会话持久化
 
-var movies = require('./routes/movies')
-var users = require('./routes/users')
+var routes = require('./config/routes')
 
 // 实例化
 var app = express();
@@ -81,10 +80,10 @@ app.use(function (req, res, next) {
 	// console.log('req.session:', req.session);
 	var user = req.session.user
 
-	if (user) {
-		// 设置本地全局变量
-		app.locals.user = user
-	}
+	// 无论user是否存在，都统一设置本地全局变量
+	// 登出时也会在这清除的
+	app.locals.user = user
+
 
 	// 下一步
 	next();
@@ -114,7 +113,7 @@ app.locals.moment = require('moment');
 
 
 // 设置视图根目录
-app.set('views', './views/pages');
+app.set('views', './app/views/pages');
 // 设置默认的模板引擎
 app.set('view engine', 'pug');
 
@@ -125,6 +124,7 @@ console.log(`localhost:${port}`);
 
 
 // 路由配置
-movies(app)
-users(app)
+routes(app)
+// movies(app)
+// users(app)
 
