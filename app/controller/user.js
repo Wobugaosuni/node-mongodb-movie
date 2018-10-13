@@ -31,8 +31,8 @@ exports.signUp = function (req, res) {
   User.find({name: userInfo.name}, function (error, docs) {
     console.log('find docs:', docs);
     if (docs.length) {
-      // 已经注册过了
-      res.redirect('/')
+      // 已经注册过了，跳转到登录页
+      res.redirect('/signin')
     } else {
       // 增加注册
       var _userInfo = new User(userInfo)
@@ -60,8 +60,8 @@ exports.signIn = function (req, res) {
       console.log('findOne user error:', error);
     }
     if (!docs) {
-      // null
-      res.redirect('/')
+      // 跳转到注册页
+      return res.redirect('/signup')
     }
 
     console.log('docs:', docs);
@@ -81,6 +81,7 @@ exports.signIn = function (req, res) {
         return res.redirect('/')
       } else {
         console.log('comparePassword fail');
+        return res.redirect('/signin')
       }
     })
   })
@@ -112,4 +113,14 @@ exports.list = function (req, res) {
       users: docs
     })
   })
+}
+
+// 登录页
+exports.showSignin = function (req, res) {
+  res.render('user/signin')
+}
+
+// 注册页
+exports.showSignup = function (req, res) {
+  res.render('user/signup')
 }
