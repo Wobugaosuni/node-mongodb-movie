@@ -90,7 +90,9 @@ app.use(function (req, res, next) {
 });
 
 
-// 开发环境配置
+/**
+ * 开发环境配置
+ */
 // console.log('env:', app.get('env'));
 if (app.get('env') === 'development') {
 	// 格式化的html配置
@@ -125,6 +127,4 @@ console.log(`localhost:${port}`);
 
 // 路由配置
 routes(app)
-// movies(app)
-// users(app)
 
