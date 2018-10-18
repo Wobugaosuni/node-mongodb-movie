@@ -104,24 +104,15 @@ exports.logout = function (req, res) {
 
 // 获取用户列表
 exports.list = function (req, res) {
-  // 权限判断
-  const user = req.session.user
-  if (!user) {
-    res.redirect('/signin')
-  }
+  User.fetch(function (err, docs) {
+    if (err) {
+      console.log('get userList error:', err);
+    }
 
-  // 只能管理员角色才能进入
-  if (user.role > 10) {
-    User.fetch(function (err, docs) {
-      if (err) {
-        console.log('get userList error:', err);
-      }
-
-      res.render('admin/userList', {
-        users: docs
-      })
+    res.render('admin/userList', {
+      users: docs
     })
-  }
+  })
 }
 
 // 登录页
@@ -132,4 +123,27 @@ exports.showSignin = function (req, res) {
 // 注册页
 exports.showSignup = function (req, res) {
   res.render('user/signup')
+}
+
+// 登录中间件
+exports.loginRequired = function (req, res, next) {
+  const user = req.session.user
+
+  if (!user) {
+    return res.redirect('/signin')
+  } else {
+    next()
+  }
+}
+
+// 管理员鉴权中间件
+exports.adminReqiured = function (req, res, next) {
+  // 已经做过登录判断了，这里不再需要做
+  const user = req.session.user
+  if (user.role <= 10) {
+    // 没权限
+    return res.redirect('/signin')
+  } else {
+    next()
+  }
 }

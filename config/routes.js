@@ -27,7 +27,7 @@ const routes = function (app) {
   // 登出
   app.get('/logout', User.logout)
   // 获取用户列表
-  app.get('/admin/userList', User.list)
+  app.get('/admin/userList', User.loginRequired, User.adminReqiured, User.list)
   // 登录页，第一个参数是页面路由，第二个参数是，匹配到路由后执行的回调函数
   app.get('/signin', User.showSignin)
   // 注册页
