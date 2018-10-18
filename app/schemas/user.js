@@ -3,6 +3,16 @@ var bcrypt = require('bcrypt')
 
 var saltRounds = 10
 
+/**
+ * 用户类型定义
+ * 0: normal user
+ * 1: verified user
+ * 2: professional user
+ * ...
+ * >10: admin（不存在数据库里）
+ * >50: super admin（不存在数据库里）
+ */
+
 // 定义模式
 var UserSchema = new mongoose.Schema({
   name: {
@@ -10,6 +20,10 @@ var UserSchema = new mongoose.Schema({
     unique: true,  // 唯一的。https://mongoosejs.com/docs/api.html#schematype_SchemaType-unique
   },
   password: String,
+  role: {
+    type: Number,
+    default: 0,
+  },
   meta: {
 		createAt: {
 			type: Date,

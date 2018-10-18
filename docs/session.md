@@ -35,8 +35,8 @@
       var dbUrl = 'mongodb://localhost:27017/movies'
 
       app.use(session({
-        secret: 'imooc',
-        name: 'connectSessionId',
+        secret: 'imooc',  // Required option, used to sign the session ID cookie，防止篡改cookie
+        name: 'connectSessionId',  // 设置 cookie 中保存 session ID 的字段名称，默认为connect.sid
         store: new MongoStore({   // 持久化
           url: dbUrl,
           collection: sessions,   // 非必填，默认会在数据库中增加一张 sessions 的表

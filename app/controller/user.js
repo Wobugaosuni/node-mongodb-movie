@@ -104,15 +104,24 @@ exports.logout = function (req, res) {
 
 // 获取用户列表
 exports.list = function (req, res) {
-  User.fetch(function (err, docs) {
-    if (err) {
-      console.log('get userList error:', err);
-    }
+  // 权限判断
+  const user = req.session.user
+  if (!user) {
+    res.redirect('/signin')
+  }
 
-    res.render('admin/userList', {
-      users: docs
+  // 只能管理员角色才能进入
+  if (user.role > 10) {
+    User.fetch(function (err, docs) {
+      if (err) {
+        console.log('get userList error:', err);
+      }
+
+      res.render('admin/userList', {
+        users: docs
+      })
     })
-  })
+  }
 }
 
 // 登录页
