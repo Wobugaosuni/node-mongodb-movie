@@ -43,7 +43,7 @@ exports.signUp = function (req, res) {
         }
 
         console.log('sigup success:', data);
-        res.redirect('/admin/userList')
+        res.redirect('/admin/user/list')
       })
     }
   })

@@ -10,20 +10,20 @@ const routes = function (app) {
    * 电影相关
    */
   // 电影录入页
-  app.get('/admin/movie', Movie.form)
+  app.get('/admin/movie', User.loginRequired, User.adminReqiured, Movie.form)
   // 新增电影接口
-  app.post('/admin/movie/new', Movie.new)
+  app.post('/admin/movie/new', User.loginRequired, User.adminReqiured, Movie.new)
   app.get('/movie/:id', Movie.detail)
-  app.get('/admin/movie/update/:id', Movie.update)
-  app.get('/admin/movie/list', Movie.list)
-  app.delete('/admin/movie/list', Movie.delete)
+  app.get('/admin/movie/update/:id', User.loginRequired, User.adminReqiured, Movie.update)
+  app.get('/admin/movie/list', User.loginRequired, User.adminReqiured, Movie.list)
+  app.delete('/admin/movie/list', User.loginRequired, User.adminReqiured, Movie.delete)
 
 
   /**
    * 用户相关
    */
   // 用户删除
-  app.delete('/admin/user/list', User.delete)
+  app.delete('/admin/user/list', User.loginRequired, User.adminReqiured, User.delete)
   // 注册
   app.post('/user/signup', User.signUp)
   // 登录
