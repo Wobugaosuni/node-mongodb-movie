@@ -6,7 +6,7 @@ $(function () {
 
         $.ajax({
             type:'DELETE',
-            url:'/admin/movieList?id=' + id
+            url:'/admin/movie/list?id=' + id
         })
         .done(function (results) {
             if(results.success === 1){
@@ -23,7 +23,7 @@ $(function () {
 
         $.ajax({
             type:'DELETE',
-            url:'/admin/userList?id=' + id
+            url:'/admin/user/list?id=' + id
         })
         .done(function (results) {
             if(results.success === 1){

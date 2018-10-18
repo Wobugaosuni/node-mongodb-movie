@@ -6,20 +6,24 @@ const routes = function (app) {
   // 首页
   app.get('/', Index.index)
 
-  // 电影相关
+  /**
+   * 电影相关
+   */
+  // 电影录入页
   app.get('/admin/movie', Movie.form)
+  // 新增电影接口
   app.post('/admin/movie/new', Movie.new)
   app.get('/movie/:id', Movie.detail)
-  app.get('/admin/update/:id', Movie.update)
-  app.get('/admin/list', Movie.list)
-  app.delete('/admin/movieList', Movie.delete)
+  app.get('/admin/movie/update/:id', Movie.update)
+  app.get('/admin/movie/list', Movie.list)
+  app.delete('/admin/movie/list', Movie.delete)
 
 
   /**
    * 用户相关
    */
   // 用户删除
-  app.delete('/admin/userList', User.delete)
+  app.delete('/admin/user/list', User.delete)
   // 注册
   app.post('/user/signup', User.signUp)
   // 登录
@@ -27,7 +31,7 @@ const routes = function (app) {
   // 登出
   app.get('/logout', User.logout)
   // 获取用户列表
-  app.get('/admin/userList', User.loginRequired, User.adminReqiured, User.list)
+  app.get('/admin/user/list', User.loginRequired, User.adminReqiured, User.list)
   // 登录页，第一个参数是页面路由，第二个参数是，匹配到路由后执行的回调函数
   app.get('/signin', User.showSignin)
   // 注册页

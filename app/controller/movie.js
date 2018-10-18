@@ -61,7 +61,7 @@ exports.new = function (req, res) {
         console.log('create movie record fail', err)
       }
       console.log('create movie record success', movie);
-      // res.redirect('/movie/' + movie._id);
+      res.redirect('/movie/' + movie._id);
     })
   }
 }
