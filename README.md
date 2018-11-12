@@ -24,7 +24,7 @@ Node.js + MongoDB 网站后台增删改查的简单轮子
 
 - **数据库**  MongoDB
 
-- **数据库建模工具** [mongoose](https://mongoosejs.com/docs/api.htm)
+- **数据库建模工具** [mongoose](https://mongoosejs.com/docs/api.html)
   [具体笔记请点击](./docs/mongoose.md)
 
 - **服务器端**  node + express

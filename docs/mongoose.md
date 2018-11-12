@@ -40,3 +40,15 @@
   - [Document.prototype.isNew](https://mongoosejs.com/docs/api.html#document_Document-isNew)
   Boolean flag specifying if the **document** is new.
   实例是否是新建的
+
+## [Populate](https://mongoosejs.com/docs/populate.html)
+
+因为MongoDB是文档型数据库，所以它没有关系型数据库joins(数据库的两张表通过"外键"，建立连接关系) 特性。也就是在建立数据的关联时会比较麻烦。
+
+实现关系型数据查找，mongoose 封装了 populate，实现了表之间的关联
+
+* Mongoose 引用类型（无业务含义、不易重复、减少配置）：
+ * ObjectIds: To specify a type of ObjectId, use `Schema.Types.ObjectId` in your declaration. （推荐使用）
+ * Number
+ * String
+ * Buffer
