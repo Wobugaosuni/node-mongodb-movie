@@ -1,6 +1,6 @@
 extends ../layout
 block content
-    .container
+    .container(style="padding: 0 0 74px 0")
         .row
             .col-md-7
                 iframe(src=movie.flash, width="720px", height="480px", align="middle", frameborder="0" allowfullscreen="true")
@@ -18,3 +18,11 @@ block content
                     dd=movie.year
                     dt 简介
                     dd=movie.summary
+
+        .row
+            form(method="post", action="/user/comment")
+                input(type="hidden", name="comment[movie]", value=movie._id)
+                //- input(type="hidden", name="comment[from]", value=user._id)
+                .form-group
+                    textarea.form-control(name="comment[content]", row=4)
+                button.btn.btn-primary(type="submit") 提交

@@ -48,7 +48,7 @@
 实现关系型数据查找，mongoose 封装了 populate，实现了表之间的关联
 
 * Mongoose 引用类型（无业务含义、不易重复、减少配置）：
- * ObjectIds: To specify a type of ObjectId, use `Schema.Types.ObjectId` in your declaration. （推荐使用）
- * Number
- * String
- * Buffer
+  * ObjectIds: To specify a type of ObjectId, use `Schema.Types.ObjectId` in your declaration. （推荐使用）
+  * Number
+  * String
+  * Buffer

@@ -1,6 +1,7 @@
 var Index = require('../app/controller/index')
 var Movie = require('../app/controller/movie')
 var User = require('../app/controller/user')
+var Comment = require('../app/controller/comment')
 
 const routes = function (app) {
   // 首页
@@ -36,6 +37,13 @@ const routes = function (app) {
   app.get('/signin', User.showSignin)
   // 注册页
   app.get('/signup', User.showSignup)
+
+
+  /**
+   * 评论相关
+   */
+  // 保存评论
+  app.post('/user/comment', User.loginRequired, Comment.save)
 }
 
 module.exports = routes

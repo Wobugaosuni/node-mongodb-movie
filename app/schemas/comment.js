@@ -17,9 +17,9 @@ var ObjectId = Schema.Types.ObjectId
 
 // 定义模式
 var CommentSchema = new Schema({
-  movie: {
+  movie: {  // 通过 ref 引用查找对应的数据：ObjectId
     type: ObjectId,
-    ref: 'Movie',   // 通过 ref 引用查找对应的数据
+    ref: 'Movie',
   },
   from: {
     type: ObjectId,
