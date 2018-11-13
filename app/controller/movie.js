@@ -3,6 +3,7 @@ var db = require('../models/db');
 var utils = require('../../public/js/util')
 
 var Movie = db.Movie;
+var Comment = db.Comment
 
 // 录入页
 exports.form = function (req, res) {
@@ -70,9 +71,14 @@ exports.new = function (req, res) {
 exports.detail = function (req, res) {
   var id = req.params.id;
   Movie.findById(id, function (err, movie) {
-    res.render('detail', {
-      title: '详情页',
-      movie: movie
+    // 找到相关评论
+    Comment.find({movie: id}, function (err, comment) {
+      res.render('detail', {
+        title: '详情页',
+        movie: movie,
+        comment,
+      })
+      console.log('find movie comment success:', comment);
     })
   })
 
