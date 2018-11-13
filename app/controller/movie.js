@@ -70,16 +70,24 @@ exports.new = function (req, res) {
 // 详情页
 exports.detail = function (req, res) {
   var id = req.params.id;
+
   Movie.findById(id, function (err, movie) {
     // 找到相关评论
-    Comment.find({movie: id}, function (err, comment) {
-      res.render('detail', {
-        title: '详情页',
-        movie: movie,
-        comment,
+    Comment
+      .find({movie: id})
+      .populate('from', 'name')
+      .exec(function (err, comment) {
+        if (err) {
+          console.log('find movie comment error:', err)
+          return
+        }
+        res.render('detail', {
+          title: '详情页',
+          movie,
+          comment,
+        })
+        console.log('find movie comment success:', comment);
       })
-      console.log('find movie comment success:', comment);
-    })
   })
 
 }

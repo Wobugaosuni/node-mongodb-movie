@@ -23,11 +23,11 @@ var CommentSchema = new Schema({
   },
   from: {
     type: ObjectId,
-    ref: 'User',
+    ref: 'user_collection',   // 引用数据库中的用户表
   },
   to: {
     type: ObjectId,
-    ref: 'User',
+    ref: 'user_collection',
   },
   content: String,
 	meta: {
