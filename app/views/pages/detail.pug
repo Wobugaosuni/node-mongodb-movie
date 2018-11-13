@@ -22,7 +22,7 @@ block content
         .row
             form(method="post", action="/user/comment")
                 input(type="hidden", name="comment[movie]", value=movie._id)
-                //- input(type="hidden", name="comment[from]", value=user._id)
+                input(type="hidden", name="comment[from]", value=user._id)
                 .form-group
                     textarea.form-control(name="comment[content]", row=4)
                 button.btn.btn-primary(type="submit") 提交
