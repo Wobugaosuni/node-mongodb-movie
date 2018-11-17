@@ -23,7 +23,9 @@ var CategorySchema = new Schema({
 			type: Date,
 			default: Date.now()
 		}
-	}
+	},
+}, {
+	usePushEach: true,  // 解决 category.movies.push(movieId) 报错 MongoError: Unknown modifier: $pushAll 的问题
 });
 
 

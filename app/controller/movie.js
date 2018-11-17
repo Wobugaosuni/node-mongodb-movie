@@ -45,7 +45,7 @@ exports.new = function (req, res) {
 
   // console.log(req.body.movie);
 
-  if (id.length) {
+  if (id) {
     // 编辑
     Movie.findById(id, function (err, movie) {
       if (err) {
@@ -63,17 +63,43 @@ exports.new = function (req, res) {
     })
   } else {
     // 新建
-    const newMovie = utils.removeObjKey('_id', movieObj)
-    console.log('newMovie:', newMovie)
+    // const newMovie = utils.removeObjKey('_id', movieObj)
+    console.log('newMovie:', movieObj)
 
-    _movie = new Movie(newMovie);
+    _movie = new Movie(movieObj);
 
     _movie.save(function (err, movie) {
       if (err) {
-        console.log('create movie record fail', err)
+        console.log('create movie fail', err)
+        return
       }
-      console.log('create movie record success', movie);
-      res.redirect('/movie/' + movie._id);
+      console.log('create movie success', movie);
+
+      // 找到电影对应的类目
+      const categoryId = movie.category
+      Category.findById(categoryId, function (err, category) {
+        if (err) {
+          console.log('find category fail', err)
+          return
+        }
+        console.log('find category success', category);
+
+        // category是Document，在相应的类目中增加电影的_id
+        category.movies.push(movie._id)
+
+        console.log('category pushed:', category);
+
+        category.save(function (err, cat) {
+          if (err) {
+            console.log('save category fail', err)
+            return
+          }
+          console.log('save category success', cat);
+
+          // 跳转到电影详情页
+          res.redirect('/movie/' + movie._id);
+        })
+      })
     })
   }
 }
@@ -117,7 +143,7 @@ exports.update = function (req, res) {
 
       console.log('---movie---:', movie);
 
-      res.render('admin/admin', {
+      res.render('admin/movieForm', {
         title: '更新电影',
         movie: movie
       })
