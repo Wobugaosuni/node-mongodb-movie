@@ -3,24 +3,35 @@ var db = require('../models/db');
 var utils = require('../../public/js/util')
 
 var Movie = db.Movie;
-var Comment = db.Comment
+var Comment = db.Comment;
+var Category = db.Category;
 
 // 录入页
 exports.form = function (req, res) {
-  // 渲染 ./views/pages/movieForm.jade 页面
-  res.render('admin/movieForm', {
-    title: '后台录入',
-    movie: {
-      title: '',
-      doctor: '',
-      country: '',
-      year: '',
-      poster: '',
-      flash: '',
-      summary: '',
-      language: ''
+  // 获取类目列表
+  Category.find(function (err, categories) {
+    if (err) {
+      console.log('get categories error:', err)
     }
+
+    console.log('get categories success:', categories)
+    // 渲染 ./views/pages/movieForm.jade 页面
+    res.render('admin/movieForm', {
+      title: '后台录入',
+      movie: {
+        title: '',
+        doctor: '',
+        country: '',
+        year: '',
+        poster: '',
+        flash: '',
+        summary: '',
+        language: '',
+        categories,
+      }
+    })
   })
+
 }
 
 // 接口，保存录入
