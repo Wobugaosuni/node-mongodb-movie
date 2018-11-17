@@ -7,8 +7,8 @@ var Comment = db.Comment
 
 // 录入页
 exports.form = function (req, res) {
-  // 渲染 ./views/pages/admin.jade 页面
-  res.render('admin/admin', {
+  // 渲染 ./views/pages/movieForm.jade 页面
+  res.render('admin/movieForm', {
     title: '后台录入',
     movie: {
       title: '',
