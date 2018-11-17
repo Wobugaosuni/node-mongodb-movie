@@ -8,7 +8,7 @@ exports.index = function (req, res) {
   Category
     .find()
     .populate({
-      path: 'category_collection',
+      path: 'movies',  // 找到相关的引用，movies 是在 CategorySchema 中定义的字段
       options: {
         limit: 4,   // 最多4条数据
       }
