@@ -6,8 +6,8 @@ var ObjectId = Schema.Types.ObjectId;
 var MoiveSchema = new Schema({
 	category: {
 		type: ObjectId,
-		ref: 'category-collection',  // 引用类目表
-	}
+		ref: 'category_collection',  // 引用类目表
+	},
 	doctor: String,
 	title: String,
 	language: String,

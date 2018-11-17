@@ -69,7 +69,7 @@
   var CommentSchema = new Schema({
     movie: {  // 通过 ref 引用查找对应的数据：ObjectId
       type: ObjectId,
-      ref: 'movies-collection',
+      ref: 'movies_collection',
     },
     from: {
       type: ObjectId,

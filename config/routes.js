@@ -2,6 +2,7 @@ var Index = require('../app/controller/index')
 var Movie = require('../app/controller/movie')
 var User = require('../app/controller/user')
 var Comment = require('../app/controller/comment')
+var Category = require('../app/controller/category')
 
 const routes = function (app) {
   // 首页
@@ -44,6 +45,17 @@ const routes = function (app) {
    */
   // 保存评论
   app.post('/user/comment', User.loginRequired, Comment.save)
+
+
+  /**
+   * 类别相关
+   */
+  // 类别列表页
+  app.get('/admin/category/list', User.loginRequired, User.adminReqiured, Category.list)
+  // 类别录入页
+  app.get('/admin/category', User.loginRequired, User.adminReqiured, Category.form)
+  // 新增类别接口
+  app.post('/admin/category/new', User.loginRequired, User.adminReqiured, Category.new)
 }
 
 module.exports = routes

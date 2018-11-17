@@ -12,7 +12,7 @@ var CategorySchema = new Schema({
 	name: String,
   movies: [{  // 通过 ref 引用查找对应的数据：ObjectId
     type: ObjectId,
-    ref: 'movies-collection',
+    ref: 'movies_collection',
   }],
 	meta: {
 		createAt: {

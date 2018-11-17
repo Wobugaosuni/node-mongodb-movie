@@ -8,7 +8,7 @@ exports.index = function (req, res) {
   Category
     .find()
     .populate({
-      path: 'category-collection',
+      path: 'category_collection',
       options: {
         limit: 4,   // 最多4条数据
       }
