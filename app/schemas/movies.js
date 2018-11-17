@@ -1,7 +1,13 @@
 var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
+var ObjectId = Schema.Types.ObjectId;
 
 // 定义模式
-var MoiveSchema = new mongoose.Schema({
+var MoiveSchema = new Schema({
+	category: {
+		type: ObjectId,
+		ref: 'category-collection',  // 引用类目表
+	}
 	doctor: String,
 	title: String,
 	language: String,
