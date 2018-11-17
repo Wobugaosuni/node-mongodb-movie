@@ -75,7 +75,7 @@ exports.detail = function (req, res) {
     // 找到相关评论
     Comment
       .find({movie: id})
-      .populate('from', 'name')
+      .populate('from', 'name')  // 找到相关的引用对应的值。 user_collection表中对应id记录的name
       .exec(function (err, comment) {
         if (err) {
           console.log('find movie comment error:', err)

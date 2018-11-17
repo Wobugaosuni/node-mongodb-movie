@@ -52,3 +52,64 @@
   * Number
   * String
   * Buffer
+
+使用：
+
+例如电影的相关评论。评论列表有相关的字段：
+- movie，对应的电影，与 Movie 相关联
+- from，评价人，与 User 相关联
+- to，评价人，与 User 相关联
+- content，评价内容
+
+1. 在定义模式时，定义相关的引用
+
+注意：引用的是相关数据库中的表名，而不是模型！
+```js
+  // 定义模式
+  var CommentSchema = new Schema({
+    movie: {  // 通过 ref 引用查找对应的数据：ObjectId
+      type: ObjectId,
+      ref: 'movies-collection',
+    },
+    from: {
+      type: ObjectId,
+      ref: 'user_collection',   // 引用数据库中的用户表
+    },
+    to: {
+      type: ObjectId,
+      ref: 'user_collection',
+    },
+    content: String,
+    ...
+  });
+
+```
+
+2. 获取完电影详情后，获取相关评论
+
+```js
+  // 详情页
+  exports.detail = function (req, res) {
+    var id = req.params.id;
+
+    Movie.findById(id, function (err, movie) {
+      // 找到相关评论
+      Comment
+        .find({movie: id})
+        .populate('from', 'name')  // 找到相关的引用对应的值。 user_collection表中对应id记录的name
+        .exec(function (err, comment) {
+          if (err) {
+            console.log('find movie comment error:', err)
+            return
+          }
+          res.render('detail', {
+            title: '详情页',
+            movie,
+            comment,
+          })
+          console.log('find movie comment success:', comment);
+        })
+    })
+
+  }
+```
