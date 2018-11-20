@@ -56,6 +56,8 @@ const routes = function (app) {
   app.get('/admin/category', User.loginRequired, User.adminReqiured, Category.form)
   // 新增类别接口
   app.post('/admin/category/new', User.loginRequired, User.adminReqiured, Category.new)
+  // 类目删除
+  app.delete('/admin/category/list', User.loginRequired, User.adminReqiured, Category.delete)
 }
 
 module.exports = routes

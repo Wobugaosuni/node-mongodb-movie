@@ -43,3 +43,22 @@ exports.new = function (req, res) {
       res.redirect('/admin/category/list');
     })
 }
+
+// 类目删除
+exports.delete = function (req, res) {
+  var id = req.query.id;
+
+  if (id) {
+    Category.remove({
+      _id: id
+    }, function (err, movie) {
+      if (err) {
+        console.log(err)
+      } else {
+        res.json({
+          success: 1
+        })
+      }
+    })
+  }
+}
