@@ -12,6 +12,10 @@ block content
 				//- 	label.col-sm-2.control-label(for="inputCategoryName") 电影分类
 				//- 	.col-sm-10
 				//- 		input#inputCategoryName.form-control(type="text", name="movie[categoryName]", value=movie.categoryName)
+				.form-group
+					label.col-sm-2.control-label(for="inputTitle") 豆瓣电影subject_id
+					.col-sm-10
+						input#douban.form-control(type="text", name="movie[douban]", value=movie.douban)
 
 				.form-group
 					label.col-sm-2.control-label(for="inputCategory") 分类选择
@@ -69,3 +73,5 @@ block content
 					.col-sm-2
 					.col-sm-10
 						button.btn.btn-default(type="submit") 录入
+
+	script(src="/js/admin.js")

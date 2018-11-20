@@ -16,6 +16,7 @@ $(function () {
             }
         })
     })
+
     $('.del-user').click(function (e) {
         var target = $(e.target);
         var id = target.data('id');
@@ -33,6 +34,7 @@ $(function () {
             }
         })
     })
+
     $('.del-category').click(function (e) {
         var target = $(e.target);
         var id = target.data('id');
@@ -49,5 +51,32 @@ $(function () {
                 }
             }
         })
+    })
+
+    $('#douban').blur(function () {
+        const douban = $(this)
+        console.log('douban:', douban)
+        const movieId = douban.val()
+
+        if (movieId) {
+            // 发请求获取数据
+            $.ajax({
+                type: 'GET',
+                url: 'http://api.douban.com/v2/movie/subject/' + movieId,
+                dataType: 'jsonp',
+                jsonp: 'callback',
+            })
+            .done(function (results) {
+                console.log('get movie success:', results)
+
+                // 自动填充表单值
+                $('#inputTitle').val(results.title)
+                $('#inputDoctor').val(results.directors[0].name)
+                $('#inputCountry').val(results.countries[0])
+                $('#inputPoster').val(results.images.large)
+                $('#inputYear').val(results.year)
+                $('#inputSummary').val(results.summary)
+            })
+        }
     })
 });
