@@ -94,9 +94,19 @@ exports.new = function (req, res) {
         }
         console.log('find category success', category);
 
-        category.movies = category.movies.filter(item => item._id !== movie.category)
 
-        console.log('category pushed:', category);
+        category.movies = category.movies.filter(id => {
+          const idStr = id.toString()
+          const movieIdStr = movie._id.toString()
+
+          // console.log('----id----:', idStr);
+          // console.log('----movieIdStr----:', movieIdStr)
+          // console.log('is id match:', idStr === movieIdStr)
+
+          return idStr !== movieIdStr
+        })
+
+        console.log('category update:', category);
 
         category.save(function (err, cat) {
           if (err) {
@@ -104,12 +114,12 @@ exports.new = function (req, res) {
             return
           }
           console.log('save category success', cat);
+
+          // 更改后的电影
+          _movie = Object.assign(movie, movieObj)
+          saveMovie(_movie, res)
         })
       })
-
-      // 更改后的电影
-      _movie = Object.assign(movie, movieObj)
-      saveMovie(_movie, res)
     })
   } else {
     // 新建

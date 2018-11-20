@@ -77,7 +77,7 @@ app.use(serveStatic(path.join(__dirname, 'public')))
  * 文档参考：https://expressjs.com/zh-cn/4x/api.html#app.use
  */
 app.use(function (req, res, next) {
-	console.log('req.session.user:', req.session.user);
+	// console.log('req.session.user:', req.session.user);
 	var user = req.session.user
 
 	// 无论user是否存在，都统一设置本地全局变量
