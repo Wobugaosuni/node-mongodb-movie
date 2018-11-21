@@ -46,19 +46,19 @@ function saveMovie(_movie, res) {
         console.log('find category fail', err)
         return
       }
-      console.log('find category success', category);
+      // console.log('find category success', category);
 
       // category是Document，在相应的类目中增加电影的_id
       category.movies.push(movie._id)
 
-      console.log('category pushed:', category);
+      // console.log('category pushed:', category);
 
       category.save(function (err, cat) {
         if (err) {
           console.log('save category fail', err)
           return
         }
-        console.log('save category success', cat);
+        // console.log('save category success', cat);
 
         // 跳转到电影详情页
         res.redirect('/movie/' + movie._id);
@@ -92,7 +92,7 @@ exports.new = function (req, res) {
           console.log('find category fail', err)
           return
         }
-        console.log('find category success', category);
+        // console.log('find category success', category);
 
 
         category.movies = category.movies.filter(id => {
@@ -106,14 +106,14 @@ exports.new = function (req, res) {
           return idStr !== movieIdStr
         })
 
-        console.log('category update:', category);
+        // console.log('category update:', category);
 
         category.save(function (err, cat) {
           if (err) {
             console.log('save category fail', err)
             return
           }
-          console.log('save category success', cat);
+          // console.log('save category success', cat);
 
           // 更改后的电影
           _movie = Object.assign(movie, movieObj)

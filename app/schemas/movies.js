@@ -4,6 +4,7 @@ var ObjectId = Schema.Types.ObjectId;
 
 // 定义模式
 var MoiveSchema = new Schema({
+	douban: String,
 	category: {
 		type: ObjectId,
 		ref: 'category_collection',  // 引用类目表
