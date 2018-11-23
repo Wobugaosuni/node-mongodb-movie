@@ -41,7 +41,7 @@
   Boolean flag specifying if the **document** is new.
   实例是否是新建的
 
-## [Populate](https://mongoosejs.com/docs/populate.html)
+## [Populate实现表之间的关联](https://mongoosejs.com/docs/populate.html)
 
 因为MongoDB是文档型数据库，所以它没有关系型数据库joins(数据库的两张表通过"外键"，建立连接关系) 特性。也就是在建立数据的关联时会比较麻烦。
 

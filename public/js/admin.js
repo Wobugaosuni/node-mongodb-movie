@@ -2,11 +2,13 @@ $(function () {
     $('.del-movie').click(function (e) {
         var target = $(e.target);
         var id = target.data('id');
+        var category = target.data('category')
+
         var tr = $('.item-id-' + id);
 
         $.ajax({
             type:'DELETE',
-            url:'/admin/movie/list?id=' + id
+            url:'/admin/movie/list?id=' + id + '&category=' + category
         })
         .done(function (results) {
             if(results.success === 1){
@@ -20,6 +22,7 @@ $(function () {
     $('.del-user').click(function (e) {
         var target = $(e.target);
         var id = target.data('id');
+
         var tr = $('.item-id-' + id);
 
         $.ajax({

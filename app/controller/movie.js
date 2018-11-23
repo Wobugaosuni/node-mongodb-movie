@@ -214,17 +214,41 @@ exports.list = function (req, res) {
 //删除
 exports.delete = function (req, res) {
   var id = req.query.id;
+  var category = req.query.category;
+
+  console.log('category id:', category)
 
   if (id) {
     Movie.remove({
       _id: id
-    }, function (err, movie) {
+    }, function (err) {
       if (err) {
         console.log(err)
       } else {
         res.json({
           success: 1
         })
+
+        console.log('movie delete success');
+
+        if (category) {
+          // 在类目中删除相关的电影id
+          Category.findById(category, function (err, cat) {
+            if (err) {
+              console.log('Category.findById error:', err)
+            }
+
+            cat.movies = cat.movies.filter(item => item.toString() !== id)
+
+            cat.save(function (err, cat) {
+              if (err) {
+                console.log('save category fail', err)
+                return
+              }
+              console.log('cat update success')
+            })
+          })
+        }
       }
     })
   }
