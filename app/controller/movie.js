@@ -67,16 +67,39 @@ function saveMovie(_movie, res) {
   })
 }
 
+exports.savePoster = function (req, res, next) {
+  console.log('savePoster req:', req)
+}
+
 // 接口，保存录入
-exports.new = function (req, res) {
+exports.new = function (req, res, next) {
+  // req.file is the `avatar` file
+  // req.body will hold the text fields, if there were any
+
+  console.log('req.file:', req.file);
+  // 返回一个对象，是以下的字段
+  // fieldname: 'uploadPoster',
+  // originalname: 'husky.jpeg',
+  // encoding: '7bit',
+  // mimetype: 'image/jpeg',
+  // destination: 'uploads/',
+  // filename: 'f8371284b621f8b212cb8cf8c71a8f6e',
+  // path: 'uploads/f8371284b621f8b212cb8cf8c71a8f6e',
+  // size: 76567
+
   var movieObj = JSON.parse(JSON.stringify(req.body.movie));
-
-  console.log('movieObj:', movieObj)
-
   var id = movieObj._id
   var _movie;
 
-  // console.log(req.body.movie);
+  if (req.file) {
+    // 有上传的文件，使用绝对路径
+    const filePath = `${req.file.path}`
+
+    movieObj.poster = filePath
+  } else {
+    // 没有上传的文件
+  }
+
 
   if (id) {
     // 编辑

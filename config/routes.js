@@ -1,3 +1,10 @@
+/**
+ * 用来处理 multipart/form-data 的中间件
+ * https://github.com/expressjs/multer
+ */
+var multer  = require('multer')
+var upload = multer({ dest: 'uploads/' })
+
 var Index = require('../app/controller/index')
 var Movie = require('../app/controller/movie')
 var User = require('../app/controller/user')
@@ -13,8 +20,11 @@ const routes = function (app) {
    */
   // 电影录入页
   app.get('/admin/movie', User.loginRequired, User.adminReqiured, Movie.form)
-  // 新增电影接口
-  app.post('/admin/movie/new', User.loginRequired, User.adminReqiured, Movie.new)
+
+  // 新增电影接口，涉及到上传的，上传完之后再保存
+  // upload.single(name)里的name要和input的name一致！
+  app.post('/admin/movie/new', User.loginRequired, User.adminReqiured, upload.single('uploadPoster'), Movie.new)
+
   app.get('/movie/:id', Movie.detail)
   app.get('/admin/movie/update/:id', User.loginRequired, User.adminReqiured, Movie.update)
   app.get('/admin/movie/list', User.loginRequired, User.adminReqiured, Movie.list)
