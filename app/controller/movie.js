@@ -95,7 +95,7 @@ exports.new = function (req, res, next) {
     // 有上传的文件，使用绝对路径
     const filePath = `${req.file.path}`
 
-    movieObj.poster = filePath
+    movieObj.poster = req.file.filename
   } else {
     // 没有上传的文件
   }

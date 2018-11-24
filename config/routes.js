@@ -3,7 +3,7 @@
  * https://github.com/expressjs/multer
  */
 var multer  = require('multer')
-var upload = multer({ dest: 'uploads/' })
+var upload = multer({ dest: 'public/uploads/' })
 
 var Index = require('../app/controller/index')
 var Movie = require('../app/controller/movie')
