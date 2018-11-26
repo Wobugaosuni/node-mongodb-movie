@@ -158,6 +158,11 @@ exports.new = function (req, res, next) {
 exports.detail = function (req, res) {
   var id = req.params.id;
 
+  // 每次查看时都增加一次pv
+  Movie.update({_id: id}, {$inc: {pv: 1}}, function (err) {
+    console.log('movie inc error:', err)
+  })
+
   Movie
     .find({_id: id})
     .populate('category', 'name')

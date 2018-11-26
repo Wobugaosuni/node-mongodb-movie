@@ -9,6 +9,11 @@ var MoiveSchema = new Schema({
 		type: ObjectId,
 		ref: 'category_collection',  // 引用类目表
 	},
+	// 统计页面浏览量
+	pv: {
+		type: Number,
+		default: 0,
+	},
 	doctor: String,
 	title: String,
 	language: String,
