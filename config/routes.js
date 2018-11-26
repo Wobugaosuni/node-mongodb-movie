@@ -3,6 +3,7 @@
  * https://github.com/expressjs/multer
  */
 var multer  = require('multer')
+// 图片上传完后，保存到根目录public/uploads/下
 var upload = multer({ dest: 'public/uploads/' })
 
 var Index = require('../app/controller/index')
