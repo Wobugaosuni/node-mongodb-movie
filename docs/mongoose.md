@@ -113,3 +113,35 @@
 
   }
 ```
+
+## [$inc，递增一个值，用于访客统计pv等](https://docs.mongodb.com/manual/reference/operator/update/inc/)
+
+需要统计一个页面的浏览量时，可以使用到该属性 `$inc`
+例如电影详情页，每次调这个接口时，后端自动在电影表里增加浏览量1
+
+1. 在定义表字段时，定义浏览量字段，初始默认值是0
+```js
+var MoiveSchema = new Schema({
+	// 统计页面浏览量
+	pv: {
+		type: Number,
+		default: 0,
+  },
+})
+```
+
+2. 在调用电影详情页时，浏览量加1
+```js
+  // 详情页
+  exports.detail = function (req, res) {
+    var id = req.params.id;
+
+    // 每次查看时都增加一次pv
+    Movie.update({_id: id}, {$inc: {pv: 1}}, function (err) {
+      console.log('movie inc error:', err)
+    })
+
+    // ...
+  }
+
+```
