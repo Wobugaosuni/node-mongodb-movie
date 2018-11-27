@@ -1,36 +1,55 @@
-module.exports = function (grunt) {
+module.exports = function(grunt) {
 
   grunt.initConfig({
     watch: {
       jade: {
         files: ['views/**'],
-        tasks: ['livereload'],
         options: {
-          nospawn: true,
-          interrupt: false,
-          debounceDelay: 250,
-          // livereload: true
+          livereload: true
         }
       },
       js: {
         files: ['public/js/**', 'models/**/*.js', 'schemas/**/*.js'],
-        // tasks: ['jshint'],
-        tasks: ['livereload'],
         options: {
-          nospawn: true,
-          interrupt: false,
-          debounceDelay: 250,
-          // livereload: true
+          livereload: true
+        }
+      },
+      uglify: {
+        files: ['public/**/*.js'],
+        options: {
+          livereload: true
+        }
+      },
+      styles: {
+        files: ['public/**/*.less'],
+        tasks: ['less'],
+        options: {
+          nospawn: true
         }
       }
     },
 
-    reload: {
-      port: 35279,
-      liveReload: {},
-      proxy: {
-        host: 'localhost',
-        port: '4001'
+    less: {
+      development: {
+        options: {
+          compress: true,
+          yuicompress: true,
+          optimization: 2
+        },
+        files: {
+          'public/build/index.css': 'public/less/index.less'
+        }
+      }
+    },
+
+    uglify: {
+      development: {
+        files: {
+          'public/build/admin.min.js': 'public/js/admin.js',
+          'public/build/detail.min.js': [
+            'public/js/detail.js'
+          ]
+        }
       }
     },
 
@@ -41,11 +60,11 @@ module.exports = function (grunt) {
           args: [],
           ignoredFiles: ['README.md', 'node_modules/**', '.DS_Store'],
           watchedExtensions: ['js'],
-          watchFolders: ['./'],
+          watchedFolders: ['./'],
           debug: true,
           delayTime: 1,
           env: {
-            PORT: 4001
+            PORT: 3000
           },
           cwd: __dirname
         }
@@ -53,7 +72,7 @@ module.exports = function (grunt) {
     },
 
     concurrent: {
-      tasks: ['nodemon', 'watch'],
+      tasks: ['nodemon', 'watch', 'less', 'uglify'],
       options: {
         logConcurrentOutput: true
       }
@@ -61,11 +80,14 @@ module.exports = function (grunt) {
   })
 
   grunt.loadNpmTasks('grunt-contrib-watch')
-  grunt.loadNpmTasks("grunt-reload")
   grunt.loadNpmTasks('grunt-nodemon')
   grunt.loadNpmTasks('grunt-concurrent')
+  grunt.loadNpmTasks('grunt-contrib-less')
+  grunt.loadNpmTasks('grunt-contrib-uglify')
 
   grunt.option('force', true)
+
+  grunt.registerTask('build', ['less', 'uglify'])
+
   grunt.registerTask('default', ['concurrent'])
-  grunt.registerTask('livereload', ['reload', 'watch'])
 }
