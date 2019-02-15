@@ -3,3 +3,4 @@ public/libs
 package-lock.json
 uploads
 build
+.DS_Store
