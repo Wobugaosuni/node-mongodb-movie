@@ -22,11 +22,11 @@ module.exports = {
     production : {
       user : 'qiuming',  // 服务器发布的用户
       host : ['132.232.104.203'],  // 服务器
-      port: 5001,
+      port: '5001',
       ssh_options: 'StrictHostKeyChecking=no',
       ref  : 'origin/master',  // 项目所在分支
       repo : 'https://github.com/Wobugaosuni/node-mongodb-movie.git',   // 项目仓库
-      path : '/var/websites/production',  // 项目部署到服务器中的目录（要到服务器中创建）
+      path : '/websites/production',  // 项目部署到服务器中的目录（要到服务器中创建）
       'post-deploy' : 'npm install && pm2 reload ecosystem.config.js --env production'
     }
   }
