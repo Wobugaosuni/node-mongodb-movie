@@ -13,7 +13,7 @@ var routes = require('./config/routes')
 // 实例化
 var app = express();
 // 端口
-var port = process.env.PORT || 4001;
+var port = process.env.PORT || 7000;
 // 本地数据库地址
 var dbUrl = 'mongodb://127.0.0.1:19999/movies'
 
