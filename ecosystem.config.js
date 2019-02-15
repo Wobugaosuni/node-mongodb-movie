@@ -20,7 +20,8 @@ module.exports = {
   deploy : {
     production : {
       user : 'qiuming',
-      host : '132.232.104.203',
+      host : ['132.232.104.203'],
+      ssh_options: 'StrictHostKeyChecking=no',
       ref  : 'origin/master',
       repo : 'https://github.com/Wobugaosuni/node-mongodb-movie.git',
       path : '/var/websites/production',
