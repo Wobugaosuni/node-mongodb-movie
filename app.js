@@ -15,7 +15,7 @@ var app = express();
 // 端口
 var port = process.env.PORT || 7000;
 // 本地数据库地址
-var dbUrl = 'mongodb://127.0.0.1:19999/movies'
+var dbUrl = 'mongodb://qiu_movie:qiu_movie@132.232.104.203:19999/movies'
 
 
 // 连接本地数据库
