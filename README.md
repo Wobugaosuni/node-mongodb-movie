@@ -18,6 +18,18 @@ Node.js + MongoDB 网站后台增删改查的简单轮子
   grunt
 ```
 
+## 使用pm2一键部署项目
+
+在服务器搭建好相应的mongodb、做好nginx相关配置（反向代理），可以再项目本地一键部署项目，实现线上的快速更新
+
+```bash
+  # Setup deployment at remote location
+  pm2 deploy production setup
+
+  # Update remote version
+  pm2 deploy production update
+```
+
 ## 技术栈
 
 - **模板引擎**  jade
