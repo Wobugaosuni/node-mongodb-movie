@@ -39,14 +39,18 @@ function saveMovie(_movie, res) {
       console.log(err)
     }
 
+    console.log('save movie success:', movie)
+
+
     // 找到电影对应的类目
     const newCategoryId = _movie.category
+    if (!newCategoryId) return
     Category.findById(newCategoryId, function (err, category) {
       if (err) {
         console.log('find category fail', err)
         return
       }
-      // console.log('find category success', category);
+      console.log('find category success', category);
 
       // category是Document，在相应的类目中增加电影的_id
       category.movies.push(movie._id)
@@ -100,6 +104,8 @@ exports.new = function (req, res, next) {
     // 没有上传的文件
   }
 
+  // console.log('id:', id)
+
 
   if (id) {
     // 编辑
@@ -147,9 +153,9 @@ exports.new = function (req, res, next) {
   } else {
     // 新建
     // const newMovie = utils.removeObjKey('_id', movieObj)
-    console.log('newMovie:', movieObj)
 
     _movie = new Movie(movieObj);
+    // console.log('newMovie:', _movie)
     saveMovie(_movie, res)
   }
 }
