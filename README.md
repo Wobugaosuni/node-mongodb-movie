@@ -107,3 +107,9 @@ Node.js + MongoDB 网站后台增删改查的简单轮子
           ├── bootstrap
           └── jquery
 ```
+
+## 后台系统页面
+
+- 电影列表页：/admin/movie/list
+- 电影新增页：/admin/movie
+- 用户列表页：/admin/user/list
