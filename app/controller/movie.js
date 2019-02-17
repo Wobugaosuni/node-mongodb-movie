@@ -44,6 +44,7 @@ function saveMovie(_movie, res) {
 
     // 找到电影对应的类目
     const newCategoryId = _movie.category
+    console.log('newCategoryId:', typeof newCategoryId)  // undefined
     if (!newCategoryId) return
     Category.findById(newCategoryId, function (err, category) {
       if (err) {
@@ -250,7 +251,7 @@ exports.delete = function (req, res) {
   var id = req.query.id;
   var category = req.query.category;
 
-  console.log('category id:', category)
+  // console.log('category id:', category)
 
   if (id) {
     Movie.remove({
@@ -264,25 +265,26 @@ exports.delete = function (req, res) {
         })
 
         console.log('movie delete success');
+        console.log('category id:', typeof category)  // string!!!!!
 
-        if (category) {
-          // 在类目中删除相关的电影id
-          Category.findById(category, function (err, cat) {
+        if (category === 'undefined') return 
+
+        // 在类目中删除相关的电影id
+        Category.findById(category, function (err, cat) {
+          if (err) {
+            console.log('Category.findById error:', err)
+          }
+
+          cat.movies = cat.movies.filter(item => item.toString() !== id)
+
+          cat.save(function (err, cat) {
             if (err) {
-              console.log('Category.findById error:', err)
+              console.log('save category fail', err)
+              return
             }
-
-            cat.movies = cat.movies.filter(item => item.toString() !== id)
-
-            cat.save(function (err, cat) {
-              if (err) {
-                console.log('save category fail', err)
-                return
-              }
-              console.log('cat update success')
-            })
+            console.log('cat update success')
           })
-        }
+        })
       }
     })
   }
